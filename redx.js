@@ -13,6 +13,13 @@ const nameReducer = (state = '(niemand)', action) => {
 // ACTION CREATOR
 const updateName = (name) => ({ type: UPDATE_NAME, payload: name });
 
+class nameStore {
+    state = 'nobody';
+    updateName = (name) => {
+        this.state = name;
+    }
+}
+
 // STORE
 const reducers = combineReducers({
     name: nameReducer
