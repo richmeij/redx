@@ -1,6 +1,6 @@
 const { connect } = ReactRedux;
 
-const reducer = (target, initialState = {}) => {
+const store = (target, initialState = {}) => {
     const targetName = target.constructor.name;
     const defaultState = target.initialState || initialState;
     const actions = Object.getOwnPropertyNames(target)

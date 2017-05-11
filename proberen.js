@@ -23,7 +23,7 @@ class PersonStore {
         age
     }));
 }
-const personStore = reducer(new PersonStore());
+const personStore = store(new PersonStore());
 
 // STORE
 const reducers = combineReducers(
