@@ -18,7 +18,7 @@ class PersonStore {
         age
     }));
 
-    updatePerson = action((state, name, age) => ({
+    updatePerson = action((_, name, age) => ({
         name,
         age
     }));
