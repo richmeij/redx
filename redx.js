@@ -1,21 +1,22 @@
 const { connect } = ReactRedux;
 
 const reducer = (target, initialState = {}) => {
+    const targetName = target.constructor.name;
     const defaultState = target.initialState || initialState;
     const actions = Object.getOwnPropertyNames(target)
         .filter(p => target[p].__isRedXAction);
     let reducer = (state = defaultState, action) => {
-        const handler = actions.find(a => a === action.type);
+        const handler = actions.find(a => `${targetName}_${a}` === action.type);
         if (handler !== undefined) {
-            return target[handler](state, action.payload);
+            return target[handler](state, ...action.payload);
         }
         return state;
     };
-    reducer.storeName = target.storeName || target.constructor.name.replace(/store/i, '').toLowerCase();
+    reducer.storeName = target.storeName || targetName.replace(/store/i, '').toLowerCase();
     reducer.__isRedXStore = true;
     reducer.actions = actions.reduce((acc, cur) => {
-        acc[cur] = (payload) => {
-            const action = { type: cur, payload };
+        acc[cur] = (...payload) => {
+            const action = { type: `${targetName}_${cur}`, payload };
             return action;
         };
         return acc;
