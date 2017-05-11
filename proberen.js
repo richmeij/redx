@@ -2,30 +2,42 @@
 const { Provider } = ReactRedux;
 const { createStore, combineReducers } = Redux;
 
-class NameStore {
-    state = 'niemand'
-    updateName = action(name => name);
+class PersonStore {
+    initialState = {
+        name: 'nobody',
+        age: 0
+    };
+
+    updateName = action((state, name) => ({
+        ...state,
+        name
+    }));
+
+    updateAge = action((state, age) => ({
+        ...state,
+        age
+    }));
 }
-const nameStore = reducer(new NameStore());
+const personStore = reducer(new PersonStore());
 
 // STORE
 const reducers = combineReducers({
-    ...combineStores(nameStore)
+    ...combineStores(personStore)
 });
 const store = createStore(reducers);
 
 // COMPONENT
-const Hello = ({ name, updateName }) => {
+const Hello = ({ person, updateName, updateAge }) => {
     return (
         <div>
-            { name }<br />
-            <button onClick={() => {updateName('Henk')}}>Update!</button>
+            { person.name }&nbsp;<button onClick={() => {updateName('Henk')}}>Update name</button><br />
+            { person.age }&nbsp;<button onClick={() => {updateAge('38')}}>Update age</button> <br/>
         </div>
     );
 };
 
 // CONTAINER 
-const HelloContainer = observer(Hello, nameStore);
+const HelloContainer = observer(Hello, personStore);
 
 // ROOT
 const Root = () => (

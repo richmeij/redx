@@ -1,13 +1,13 @@
 const { connect } = ReactRedux;
 
-const reducer = (target, initialState) => {
-    const defaultState = target.state || initialState;
+const reducer = (target, initialState = {}) => {
+    const defaultState = target.initialState || initialState;
     const actions = Object.getOwnPropertyNames(target)
         .filter(p => target[p].__isRedXAction);
     let reducer = (state = defaultState, action) => {
         const handler = actions.find(a => a === action.type);
         if (handler !== undefined) {
-            return target[handler](action.payload);
+            return target[handler](state, action.payload);
         }
         return state;
     };
