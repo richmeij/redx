@@ -32,7 +32,7 @@ const reducers = combineReducers(
 const store = createStore(reducers);
 
 // COMPONENT
-const Hello = ({ person, updateName, updateAge, updatePerson }) => {
+const Person = ({ person, updateName, updateAge, updatePerson }) => {
     return (
         <div>
             { person.name }&nbsp;<button onClick={() => {updateName('Henk')}}>Update name</button><br />
@@ -43,12 +43,12 @@ const Hello = ({ person, updateName, updateAge, updatePerson }) => {
 };
 
 // CONTAINER 
-const HelloContainer = observer(Hello, personStore);
+const PersonContainer = observer(Person, personStore);
 
 // ROOT
 const Root = () => (
     <Provider store={store}>
-        <HelloContainer />
+        <PersonContainer />
     </Provider>
 );
 ReactDOM.render(<Root />, document.querySelector('#app'));
