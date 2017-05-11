@@ -1,22 +1,36 @@
-const reducer = initialState => target => {
-  const defaultState = target.state || initialState;
-  const actions = Object.getOwnPropertyNames(target)
-    .filter(p => target[p].isAction);
-  console.log(actions);
-  return (state = defaultState, action) => {
-    return state;
-  }
-}
 
-const action = target => {
-    target.isAction = true;
-    return target;
-}
+const { Provider } = ReactRedux;
+const { createStore, combineReducers } = Redux;
 
 class NameStore {
-    state = 'niemand';
+    state = 'niemand'
     updateName = action(name => name);
 }
+const nameStore = reducer(new NameStore());
 
-const nameStore = reducer()(new NameStore());
-// nameStore.updateName('Henk');
+// STORE
+const reducers = combineReducers({
+    ...combineStores(nameStore)
+});
+const store = createStore(reducers);
+
+// COMPONENT
+const Hello = ({ name, updateName }) => {
+    return (
+        <div>
+            { name }<br />
+            <button onClick={() => {updateName('Henk')}}>Update!</button>
+        </div>
+    );
+};
+
+// CONTAINER 
+const HelloContainer = observer(Hello, nameStore);
+
+// ROOT
+const Root = () => (
+    <Provider store={store}>
+        <HelloContainer />
+    </Provider>
+);
+ReactDOM.render(<Root />, document.querySelector('#app'));

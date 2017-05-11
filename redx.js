@@ -1,41 +1,51 @@
-const { Provider, connect } = ReactRedux;
-const { createStore, combineReducers } = Redux;
+const { connect } = ReactRedux;
 
-// REDUCER //
-const UPDATE_NAME = 'update_name';
-const nameReducer = (state = '(niemand)', action) => {
-    switch(action.type) {
-        case UPDATE_NAME: return action.payload;
-        default: return state;
+const reducer = (target, initialState) => {
+    const defaultState = target.state || initialState;
+    const actions = Object.getOwnPropertyNames(target)
+        .filter(p => target[p].__isRedXAction);
+    let reducer = (state = defaultState, action) => {
+        const handler = actions.find(a => a === action.type);
+        if (handler !== undefined) {
+            return target[handler](action.payload);
+        }
+        return state;
     };
+    reducer.storeName = target.storeName || target.constructor.name.replace(/store/i, '').toLowerCase();
+    reducer.__isRedXStore = true;
+    reducer.actions = actions.reduce((acc, cur) => {
+        acc[cur] = (payload) => {
+            const action = { type: cur, payload };
+            return action;
+        };
+        return acc;
+    }, {})
+    
+    return reducer;
 }
 
-// ACTION CREATOR
-const updateName = (name) => ({ type: UPDATE_NAME, payload: name });
+const combineStores = (...stores) => {
+    return stores.reduce((acc, cur) => {
+        acc[cur.storeName] = cur;
+        return acc;
+    }, {});
+}
 
-// STORE
-const reducers = combineReducers({
-    name: nameReducer
-});
-const store = createStore(reducers);
+const action = target => {
+    target.__isRedXAction = true;
+    return target;
+}
 
-// COMPONENT
-const Hello = ({ name, updateName }) => (
-    <div>
-        { name }
-        <button onClick={() => {updateName('Henk')}}>Update!</button>
-    </div>
-);
-
-// CONTAINER 
-const mapStateToProps = ({ name }) => ({ name });
-const mapDispatchToProps = { updateName };
-const HelloContainer = connect(mapStateToProps, mapDispatchToProps)(Hello);
-
-// ROOT
-const Root = () => (
-    <Provider store={store}>
-        <HelloContainer />
-    </Provider>
-);
-ReactDOM.render(<Root />, document.querySelector('#app'));
+const observer = (Component, ...stores) => {
+    const mapStateToProps = (state) => stores.reduce((acc, cur) => {
+        acc[cur.storeName] = state[cur.storeName];
+        return acc;
+    }, {});
+    const mapDispatchToProps = stores.reduce((acc, cur) => {
+        return {
+            ...acc,
+            ...cur.actions
+        };
+    }, {});
+    return connect(mapStateToProps, mapDispatchToProps)(Component);
+}
