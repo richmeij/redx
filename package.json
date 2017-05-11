@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://gitlab.com/richmeij/redx/issues"
   },
-  "homepage": "https://gitlab.com/richmeij/redx#README"
+  "homepage": "https://gitlab.com/richmeij/redx#README",
+  "dependencies": {
+    "http-server": "^0.10.0"
+  }
 }
