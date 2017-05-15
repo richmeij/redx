@@ -1,54 +1,86 @@
-
-const { Provider } = ReactRedux;
-const { createStore, combineReducers } = Redux;
-
+// REDUCER
 class PersonStore {
     initialState = {
         name: 'nobody',
-        age: 0
+        age: 0,
+        gender: 'M/V'
     };
 
-    updateName = action((state, name) => ({
+    updateName = action((state, name) => ({ 
         ...state,
-        name
+        name 
     }));
 
-    updateAge = action((state, age) => ({
+    updateAge = action((state, age) => ({ 
         ...state,
-        age
+        age 
     }));
 
-    updatePerson = action((_, name, age) => ({
+    updatePerson = action((state, name, age) => ({
+        ...state,
         name,
         age
     }));
 }
 const personStore = store(new PersonStore());
 
-// STORE
-const reducers = combineReducers({
-    ...combineStores(personStore)
-});
-const store = createStore(reducers);
+class TodoStore {
+    initialState = {
+        todos: [],
+        error: undefined
+    }
 
-// COMPONENT
-const Person = ({ person, updateName, updateAge, updatePerson }) => {
-    return (
-        <div>
-            { person.name }&nbsp;<button onClick={() => {updateName('Henk')}}>Update name</button><br />
-            { person.age }&nbsp;<button onClick={() => {updateAge(38)}}>Update age</button> <br/>
-            <button onClick={() => {updatePerson('Piet', 67)}}>Update person</button>
-        </div>
+    storeName = 'todos';
+
+    startFetching = action( 
+        (state) => {
+            console.log('started fetching');
+            return {
+                ...state,
+                todos: undefined,
+                error: undefined
+            };
+        }
     );
-};
 
-// CONTAINER 
+    doneFetching = action( 
+        (state, todos) => {
+            console.log('done fetching: ', todos);
+            return {
+                ...state,
+                todos
+            };
+        }
+    );
+
+    errorFetching = action(
+        (state, error) => ({
+            ...state,
+            error
+        })
+    );
+
+    fetchTodos = asyncAction(
+        (delay = 0) => {
+            return (dispatch, actions) => {
+                dispatch(actions.startFetching());
+                TodoService.fetchTodos(delay)
+                    .then(todos => {
+                        console.log('done: ', todos);
+                        dispatch(actions.doneFetching(todos));
+                    })
+                    .catch(error => dispatch(actions.errorFetching(error)));
+            }
+        }
+    );
+}
+const todoStore = store(new TodoStore());
+
+// STORE
+const stores = combineStores(personStore, todoStore);
+console.log(stores);
+const reducers = combineReducers(stores);
+
+// CONTAINERS
 const PersonContainer = observer(Person, personStore);
-
-// ROOT
-const Root = () => (
-    <Provider store={store}>
-        <PersonContainer />
-    </Provider>
-);
-ReactDOM.render(<Root />, document.querySelector('#app'));
+const TodoContainer = observer(Todos, todoStore);
