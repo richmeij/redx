@@ -26,9 +26,9 @@ class PersonStore {
 const personStore = store(new PersonStore());
 
 // STORE
-const reducers = combineReducers(
-    combineStores(personStore)
-);
+const reducers = combineReducers({
+    ...combineStores(personStore)
+});
 const store = createStore(reducers);
 
 // COMPONENT
