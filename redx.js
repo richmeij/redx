@@ -5,20 +5,33 @@ const store = (target, initialState = {}) => {
     const defaultState = target.initialState || initialState;
     const actions = Object.getOwnPropertyNames(target)
         .filter(p => target[p].__isRedXAction);
+
     let reducer = (state = defaultState, action) => {
         const handler = actions.find(a => `${targetName}_${a}` === action.type);
         if (handler !== undefined) {
-            return target[handler](state, ...action.payload);
+            const actionToExecute = target[handler];
+            if (actionToExecute.__isRedXAsyncAction) {
+                actionToExecute(state, ...action.payload);   
+            } else {
+                return target[handler](state, ...action.payload);
+            }
         }
         return state;
     };
+
     reducer.storeName = target.storeName || targetName.replace(/store/i, '').toLowerCase();
     reducer.__isRedXStore = true;
     reducer.actions = actions.reduce((acc, cur) => {
-        acc[cur] = (...payload) => {
-            const action = { type: `${targetName}_${cur}`, payload };
-            return action;
+        const actionCreator = function(...payload) {
+            if (target[cur].__isRedXAsyncAction) {
+                console.log(target[cur]);
+                return target[cur];
+            } else {
+                const action = { type: `${targetName}_${cur}`, payload };
+                return action;
+            }
         };
+        acc[cur] = actionCreator.bind(reducer);
         return acc;
     }, {})
     
@@ -33,8 +46,20 @@ const combineStores = (...stores) => {
 }
 
 const action = target => {
-    target.__isRedXAction = true;
-    return target;
+    let action = (...args) => {
+        const result = target(...args);
+        return {
+            ...result
+        };
+    }
+    action.__isRedXAction = true;
+    return action;
+}
+
+const asyncAction = target => {
+    let asyncAction = action(target);
+    asyncAction.__isRedXAsyncAction = true;
+    return asyncAction;
 }
 
 const observer = (Component, ...stores) => {
