@@ -3,11 +3,11 @@ RedX is a small library that enables you to use Redux in a MobX fashion for Reac
 
 WORK IN PROGRES! CONTINUE AT YOUR OWN RISK!
 
-# For the love of God, why?
+# But why?
 The principle of Redux is simple, and easy to reason about from a component perspective: State changes and your connected component gets new props.
 The implementation of Redux, however, can be daunting, especially for beginners. It can also get pretty boilerplat-y pretty fast.
 In my experience MobX has a more user friendly approach, and results in more compact and to the point code.
-In an attempt to combine the best of both worlds, I've created this library.
+In an attempt to make my live easier, I've created this lib, and I really like the way it lets me use Redux.
 
 # Cool, can I use this in production?
 
