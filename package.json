@@ -1,26 +1,53 @@
 {
-  "name": "redx",
-  "version": "1.0.0",
-  "description": "MobX style wrapper for Redux (omg!)",
-  "main": "index.js",
-  "scripts": {
-    "start": "http-server"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@gitlab.com/richmeij/redx.git"
-  },
-  "keywords": [
-    "mobx",
-    "redux"
-  ],
-  "author": "Richard Meijer",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://gitlab.com/richmeij/redx/issues"
-  },
-  "homepage": "https://gitlab.com/richmeij/redx#README",
-  "dependencies": {
-    "http-server": "^0.10.0"
-  }
+    "name": "redx",
+    "version": "0.0.1",
+    "description": "MobX style Redux for React",
+    "repository": {
+        "type": "git",
+        "url": "git@github.com:richmeij/redx.git"
+    },
+    "files": [
+        "lib/"
+    ],
+    "main": "lib/redx.js",
+    "author": "Richard Meijer",
+    "license": "WTFPL",
+    "keywords": [
+        "mobx",
+        "redux",
+        "state management",
+        "react"
+    ],
+    "scripts": {
+        "build": "babel src/lib --out-dir lib",
+        "lint": "eslint src",
+        "jest": "jest",
+        "jest:coverage": "jest --coverage",
+        "jest:watch": "jest --watch",
+        "pub": "yarn build && npm publish",
+        "test": "npm run lint && npm run jest:coverage",
+        "start": "parcel ./src/app/index.html"
+    },
+    "peerDependencies": {
+        "redux": "4.0.0",
+        "react-redux": "5.0.5"
+    },
+    "devDependencies": {
+        "babel-cli": "6.26.0",
+        "babel-core": "6.24.1",
+        "babel-eslint": "7.2.1",
+        "babel-preset-env": "1.6.0",
+        "babel-preset-stage-1": "6.24.1",
+        "babel-plugin-transform-class-properties": "6.24.1",
+        "eslint": "4.8.0",
+        "eslint-config-airbnb-base": "12.0.1",
+        "eslint-plugin-import": "2.7.0",
+        "jest": "20.0.4",
+        "parcel-bundler": "1.9.7",
+        "react": "16.0.0",
+        "react-dom": "16.4.1",
+        "react-redux": "5.0.7",
+        "redux": "4.0.0",
+        "redux-thunk": "2.3.0"
+    }
 }

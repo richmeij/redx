@@ -1,0 +1,9 @@
+src
+node_modules
+.editorconfig
+.eslintignore
+.eslintrc
+.gitignore
+.npmignore
+yarn-error.log
+yarn.lock
