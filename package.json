@@ -1,5 +1,5 @@
 {
-    "name": "redx",
+    "name": "@richmeij/redx",
     "version": "0.0.1",
     "description": "MobX style Redux for React",
     "repository": {
