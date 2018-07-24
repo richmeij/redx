@@ -11,7 +11,7 @@
     ],
     "main": "lib/redx.js",
     "author": "Richard Meijer",
-    "license": "WTFPL",
+    "license": "MIT",
     "keywords": [
         "mobx",
         "redux",
@@ -24,7 +24,7 @@
         "jest": "jest",
         "jest:coverage": "jest --coverage",
         "jest:watch": "jest --watch",
-        "pub": "yarn build && npm publish",
+        "pub": "yarn build && npm publish --access public",
         "test": "npm run lint && npm run jest:coverage",
         "start": "parcel ./src/app/index.html"
     },
