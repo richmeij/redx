@@ -10,15 +10,22 @@ In my experience, MobX has a more user friendly approach, and results in more co
 
 In an attempt to make my live easier, I've created this lib. And I really like the way it lets me use Redux. So maybe it can help you too.
 
+# How to use
+
+```
+npm install @richmeij/redx
+```
+
+See [`src/app`](https://github.com/richmeij/redx/tree/master/src/app) for an example
+
+(include examples here)
+
+
 # Cool, can I use this in production?
 
 It's still in early stages and no doubt things can be improved. But, in the end this lib merely acts as syntactic sugar for `redux` and `react-redux`, thus there will be no performance penalties in that regard.
 
 I've deployed the current code to production with no appearant problems.
-
-# How to use
-
-# Examples
 
 # TODO
 
