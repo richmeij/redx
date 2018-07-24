@@ -4,13 +4,11 @@ RedX is a small library that enables you to use Redux in a MobX fashion. Current
 WORK IN PROGRES! CONTINUE AT YOUR OWN RISK!
 
 # But why?
-The principle of Redux is simple, and easy to reason about from a component perspective: State changes and your connected component gets new props.
+The principle of Redux is simple, and easy to reason about from a component perspective: State changes and your connected component gets new props. The *implementation* of Redux, however, can be daunting, especially for beginners. And since you have to declare EVERYTHING, it can also get pretty boilerplat-y pretty fast.
 
-The implementation of Redux, however, can be daunting, especially for beginners. It can also get pretty boilerplat-y pretty fast.
+In my experience, MobX has a more user friendly approach, and results in more compact and to the point code.
 
-In my experience MobX has a more user friendly approach, and results in more compact and to the point code.
-
-In an attempt to make my live easier, I've created this lib, and I really like the way it lets me use Redux.
+In an attempt to make my live easier, I've created this lib. And I really like the way it lets me use Redux. So maybe it can help you too.
 
 # Cool, can I use this in production?
 
