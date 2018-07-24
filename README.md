@@ -24,7 +24,7 @@ I've deployed the current code to production with no appearant problems.
 
 # TODO
 
-Theres much to be improved on. Things on my radar are:
+Things on my radar are:
 * This lib has redux and react-redux as peer dependencies, as the code wrappers for both libs is in this source. Perpaps split this package in two packages as well?
 * Use decorators instead of function wrappers
 * Unit tests
