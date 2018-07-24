@@ -1,5 +1,5 @@
 # Introduction 
-RedX is a small library that enables you to use Redux in a MobX fashion for React applications.
+RedX is a small library that enables you to use Redux in a MobX fashion. Currently there's only support for React (react-redux).
 
 WORK IN PROGRES! CONTINUE AT YOUR OWN RISK!
 
