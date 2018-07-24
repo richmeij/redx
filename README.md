@@ -21,7 +21,7 @@ npm install @richmeij/redx
 
 It's still in early stages and no doubt things can be improved. But, in the end this lib merely acts as syntactic sugar for `redux` and `react-redux`, thus there will be no performance penalties in that regard.
 
-I've deployed the current code to production with no appearant problems.
+I've used the current code in other projects with no apearent problems.
 
 # Todo's
 
