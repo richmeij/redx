@@ -15,10 +15,7 @@ But, MobX never really 'clicked' for me the way Redux did. So, in an attempt to 
 npm install @richmeij/redx
 ```
 
-See [`src/app`](https://github.com/richmeij/redx/tree/master/src/app) for an example
-
-(include examples here)
-
+(Going to include examples here. For now, see [`src/app`](https://github.com/richmeij/redx/tree/master/src/app) for an example)
 
 # Cool, can I use this in production?
 
