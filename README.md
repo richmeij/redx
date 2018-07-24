@@ -7,8 +7,7 @@ WORK IN PROGRES! CONTINUE AT YOUR OWN RISK!
 The principle of Redux is simple, and easy to reason about from a component perspective: State changes and your connected component gets new props. The *implementation* of Redux, however, can be daunting, especially for beginners. And since you have to declare EVERYTHING, it can also get pretty boilerplat-y pretty fast.
 
 In my experience, MobX has a more user friendly approach, and results in more compact and to the point code.
-
-In an attempt to make my live easier, I've created this lib. And I really like the way it lets me use Redux. So maybe it can help you too.
+But, MobX never really 'clicked' for me the way Redux did. So, in an attempt to make working with Redux a little easier, I've created this lib. And I really like the way it lets me use Redux. So maybe it can help you too.
 
 # How to use
 
