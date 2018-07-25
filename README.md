@@ -13,7 +13,18 @@ But, MobX never really 'clicked' for me the way Redux did. So, in an attempt to 
 npm install @richmeij/redx
 ```
 
-(Going to include examples here. For now, see [`src/app`](https://github.com/richmeij/redx/tree/master/src/app) for an example)
+# Examples
+
+Going to include examples here. 
+For now, see [`src/app`](https://github.com/richmeij/redx/tree/master/src/app) for an example.
+If you clone this repo, you can run the demo app like this:
+
+```
+npm install
+npm start
+```
+
+The demo app will be available on `http://localhost:1234` by default.
 
 # Production ready?
 
