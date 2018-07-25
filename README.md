@@ -20,7 +20,7 @@ npm install @richmeij/redx
 It's still in early stages and no doubt things can be improved. But, in the end this lib merely acts as syntactic sugar for `redux` and `react-redux`, thus there will be no performance penalties in that regard.
 I've used the current code in other projects with no apearent problems.
 
-# Todo's
+# Todo
 
 Things on my radar are:
 * This lib has redux and react-redux as peer dependencies, as the code wrappers for both libs is in this source. Perpaps split this package in two packages as well?
