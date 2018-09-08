@@ -3,12 +3,14 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
-import countStore from './countStore';
+import CountStore from './CountStore';
 import App from './app';
 
 // Create store
 const store = createStore(
-    combineReducers({ countStore }), 
+    combineReducers({ 
+        countStore: new CountStore()
+    }), 
     applyMiddleware(thunk)
 );
 

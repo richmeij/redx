@@ -1,6 +1,8 @@
 import React from 'react';
 import { observer } from '../lib/redx-react';
-import countStore from './countStore';
+import CountStore from './CountStore';
+
+console.log(CountStore);
 
 // Create our app
 export const App = ({ countStore, title }) => {
@@ -27,4 +29,4 @@ export const App = ({ countStore, title }) => {
     );
 };
 
-export default observer(countStore)(App);
+export default observer(CountStore)(App);

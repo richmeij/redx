@@ -1,11 +1,13 @@
 import { isEmptyObject, findProperty, lowerCamelCase } from './util';
 
 // STORE ENHANCER
-export function store(target) {
+export function store(Store) {
+    console.log(Store)
+    const target = new Store();
     const storeName = target.storeName || target.constructor.name;
     const defaultState = target.initialState || {};
     const actions = Object.getOwnPropertyNames(target).filter(propName => target[propName].__isRedXAction);
-    console.log(target);
+
     const handlers = actions.reduce((handlers, actionName) => {
         const handler = target[actionName];
         if (!handler.__isRedXAsyncAction) {
@@ -14,8 +16,6 @@ export function store(target) {
         }
         return handlers;
     }, {});
-
-    console.log(actions, handlers);
 
     const reducer = (state = defaultState, action) => {
         const handler = handlers[action.type];
@@ -40,6 +40,7 @@ export function store(target) {
         }
         return state;
     };
+
     reducer.storeName = lowerCamelCase(storeName);
     reducer.__isRedXStore = true;
     reducer.__actionCreators = actions.reduce((acc, cur) => {
@@ -61,19 +62,15 @@ export function store(target) {
         return acc;
     }, {});
 
-    return reducer;
+    return () => {
+        return reducer;
+    };
 };
 
 // ACTION ENHANCER
 export const action = (target, name, descriptor) => {
-    var original = descriptor.value;
-    console.log(target, name, descriptor);
-    var action = function() {
-        return original.apply(target, arguments);
-    }
-    action.__isRedXAction = true; // eslint-disable-line no-param-reassign
-    descriptor.value = action;
-    return descriptor;
+    target.__isRedXAction = true; // eslint-disable-line no-param-reassign
+    return target;
 };
 
 // ASYNC ACTION ENHANCER
