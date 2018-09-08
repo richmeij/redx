@@ -1,6 +1,6 @@
 {
     "name": "@richmeij/redx",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "description": "MobX style Redux for React",
     "repository": {
         "type": "git",
