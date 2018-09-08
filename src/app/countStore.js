@@ -15,7 +15,7 @@ export class CountStore {
         (state) => ({ counter: state.counter - 1 })
     )
 
-    // Example of async actions which spawns child actions
+    // Example of async action which spawns child actions
     incrementStart = action(
         () => ({ delay: 5 })
     );
