@@ -1,10 +1,16 @@
 import { isEmptyObject, findProperty, lowerCamelCase } from './util';
 
-// STORE ENHANCER
-export const store = (target) => {
+/**
+ * Function accepts a class and returns a new class that you can use with RedX observer
+ * @param {Store} RedX store class.
+ * @returns {Class} A new Class, which when instantiated will return a Redux reducer.
+ */
+export function store(Store) {
+    const target = new Store();
     const storeName = target.storeName || target.constructor.name;
-    const defaultState = target.initialState || {};
+    const initialState = target.initialState || {};
     const actions = Object.getOwnPropertyNames(target).filter(propName => target[propName].__isRedXAction);
+
     const handlers = actions.reduce((handlers, actionName) => {
         const handler = target[actionName];
         if (!handler.__isRedXAsyncAction) {
@@ -14,7 +20,7 @@ export const store = (target) => {
         return handlers;
     }, {});
 
-    const reducer = (state = defaultState, action) => {
+    const reducer = (state = initialState, action) => {
         const handler = handlers[action.type];
         if (handler !== undefined) {
             let redXAsync = state.redXAsync;
@@ -37,6 +43,7 @@ export const store = (target) => {
         }
         return state;
     };
+
     reducer.storeName = lowerCamelCase(storeName);
     reducer.__isRedXStore = true;
     reducer.__actionCreators = actions.reduce((acc, cur) => {
@@ -45,8 +52,12 @@ export const store = (target) => {
             acc[cur] = (...args) => {
                 return (dispatch, getState) => {
                     const state = getState()[reducer.storeName];
-                    const currentState = isEmptyObject(state) ? defaultState : state;
-                    return handler(...args)(dispatch, reducer.__actionCreators, currentState);
+                    const currentState = isEmptyObject(state) ? initialState : state;
+                    const actions = Object.keys(reducer.__actionCreators).reduce((actions, key) => {
+                        actions[key] = () => { dispatch(reducer.__actionCreators[key]()); };
+                        return actions;
+                    }, {});
+                    return handler(...args)(dispatch, actions, currentState);
                 };
             };
         } else {
@@ -58,32 +69,28 @@ export const store = (target) => {
         return acc;
     }, {});
 
-    return reducer;
+    return () => {
+        return reducer;
+    };
 };
 
-// ACTION ENHANCER
+/**
+ * Function accepts function to mark as being a RedX action
+ * @param {function} Function to mark as RedX action
+ * @returns {function} RedX action
+ */
 export const action = (target) => {
     target.__isRedXAction = true; // eslint-disable-line no-param-reassign
     return target;
 };
 
-// ASYNC ACTION ENHANCER
+/**
+ * Function accepts function to mark as being a RedX ASYNC action
+ * @param {function} Function to mark as RedX ASYNC action
+ * @returns {function} RedX ASYNC action
+ */
 export const asyncAction = (target) => {
     const asyncAction = action(target);
     asyncAction.__isRedXAsyncAction = true;
     return asyncAction;
-};
-
-// START ACTION ENHANCER
-export const startAction = (target) => {
-    const startAction = action(target);
-    startAction.__isRedXStartAction = true;
-    return startAction;
-};
-
-// DONE ACTION ENHANCER
-export const doneAction = (target) => {
-    const doneAction = action(target);
-    doneAction.__isRedXDoneAction = true;
-    return doneAction;
 };
