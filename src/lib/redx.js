@@ -53,7 +53,11 @@ export function store(Store) {
                 return (dispatch, getState) => {
                     const state = getState()[reducer.storeName];
                     const currentState = isEmptyObject(state) ? initialState : state;
-                    return handler.bind(reducer.__actionCreators, ...args)(dispatch, currentState);
+                    const actions = Object.keys(reducer.__actionCreators).reduce((actions, key) => {
+                        actions[key] = () => { dispatch(reducer.__actionCreators[key]()); };
+                        return actions;
+                    }, {});
+                    return handler(...args)(dispatch, actions, currentState);
                 };
             };
         } else {

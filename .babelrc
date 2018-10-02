@@ -7,7 +7,7 @@
                         "last 2 versions",
                         "ie >= 10"
                     ],
-                    "node": "6.10"
+                    "node": "9.11"
                 }
             }
         ],
