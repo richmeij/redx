@@ -101,6 +101,10 @@ the store supplied as a prop will contain all the pieces of state, plus all the 
 
 ... todo ...
 
+# Utility functions
+
+... todo ...
+
 # Demo app
 A demo app is included in the source, see [`src/app`](https://github.com/richmeij/redx/tree/master/src/app).
 To check out a demo app, just clone this repo and run:
