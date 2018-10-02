@@ -7,7 +7,7 @@ export default class CountStore {
         delay: 0
     }
 
-    // Examples of 'normal' actions
+    // Examples of normal actions, which return new state
     increment = action(
         state => ({ counter: state.counter + 1 })
     );
@@ -16,7 +16,6 @@ export default class CountStore {
         state => ({ counter: state.counter - 1 })
     );
 
-    // Example of async actions which spawns child actions
     incrementStart = action(
         () => ({ delay: 5 })
     );
@@ -24,20 +23,23 @@ export default class CountStore {
     countDown = action(
         state => ({ delay: state.delay - 1 })
     );
-    
+
+    // Example of async action which spawns child actions
+    // Needs something like Redux Thunk to work
     incrementAsync = asyncAction(
         () => {
-           return (dispatch, actions, state) => {
-                dispatch(actions.incrementStart());
+           return (dispatch, state) => {
+                console.log(this);
+                dispatch(this.incrementStart());
                 const delayTimer = setInterval(
                     () => {
-                        dispatch(actions.countDown())
+                        dispatch(this.countDown())
                     },
                     1000
                 );
                 setTimeout(
                     () => { 
-                        dispatch(actions.increment());
+                        dispatch(this.increment());
                         clearInterval(delayTimer);
                     },
                     5000

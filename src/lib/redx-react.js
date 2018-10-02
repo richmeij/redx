@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 
 /**
  * HOC to convert a React class to a redux connected component.
- * @param {stores} stores The RedX stores to connect to
+ * @param {Stores} The RedX stores to connect to
  * @returns {function} A function which takes a react Component to which to connect
  */
 export const observer = (...Stores) => {

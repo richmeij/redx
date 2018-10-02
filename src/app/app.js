@@ -2,8 +2,6 @@ import React from 'react';
 import { observer } from '../lib/redx-react';
 import CountStore from './CountStore';
 
-console.log(CountStore);
-
 // Create our app
 export const App = ({ countStore, title }) => {
     const { counter, delay, increment, decrement, incrementAsync } = countStore;

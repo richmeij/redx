@@ -1,18 +1,12 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
-import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import CountStore from './CountStore';
 import App from './app';
+import { createStore } from '../lib/redux-util';
 
-// Create store
-const store = createStore(
-    combineReducers({ 
-        countStore: new CountStore()
-    }), 
-    applyMiddleware(thunk)
-);
+const store = createStore(CountStore)(thunk);
 
 // render the app in the DOM
 render(
