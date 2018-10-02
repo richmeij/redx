@@ -7,7 +7,7 @@ I have a lot of love for Redux. The principle is simple, and easy to reason abou
 Thats where RedX comes in. It allows you to create classes which contain functions that receive state and return new state.
 These classes (called Stores in RedX) and functions are transformed to reducers and actioncreators, so you don't have to worry about all the boilerplate, and can just focus on the functionality.
 
-Currently, RedX also comes with React bindings only (building on react-redux). These bindings are contained within the main package, but might become a seperate package in the future.
+Currently, RedX also comes with React bindings only (building on react-redux). These bindings are contained within the main package, but might become a separate package in the future.
 
 RedX is inspired by MobX (:heart:) in terms of terminology and abstraction, but it's still just good ol' Redux.
 
