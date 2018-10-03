@@ -22,7 +22,7 @@ npm install @richmeij/redx
 
 # Creating a Store
 
-A store in RedX is a class that will end up as a reducer in Redux.
+A store in RedX is a class that will end up as a actiontypes, actioncreators and reducing functions in Redux.
 Simply start by creating a class and exporting it as a RedX store:
 
 ```js
