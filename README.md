@@ -67,7 +67,7 @@ The format RedX uses for actionTypes is `[storeName].[actionName]`. So in the ab
 
 # Connecting to Redux
 
-So now that we have our store, we need to let Redux know about it. There's two ways to go about this.
+Now that we have our store, we need to let Redux know about it. There's a couple of ways to go about this.
 The place where we notify Redux about reducers is in the `createStore` function. Usually you would use something like `combineReducers` to add your reducers to the store, but since our stores aren't real reducers (yet), we can use a utillity function `combineStores` in combination with `combineReducers`.
 The signature for `combineStores` is: `combineStores(Store1, Store2, ..., StoreN)` and returns an object you can supply to `combineReducers`.
 
