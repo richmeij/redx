@@ -164,7 +164,7 @@ class CountStore {
         });
 
         this.increaseAsync = asyncAction(() => {
-            return (dispatch, actions) => {
+            return (dispatch, actions, state) => {
                 actions.increaseAsyncStart();
                 const delayTimer = setInterval(
                     () => {
