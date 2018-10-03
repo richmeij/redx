@@ -3,7 +3,8 @@ RedX is a small library that eliminates the boilerplate that is common with writ
 
 # Inspiration
 I have a lot of love for Redux. The principle is simple, and easy to reason about from a component perspective: Actions are fired and digested by reducers, state in reducers changes, and your connected components get new props. 
-The *implementation* of Redux, however, can be daunting, especially for beginners. Writing out all those actiontypes, actions, and reducers can get pretty boilerplat-y pretty fast. And if your up for your second or third Redux app, writing all that stuff (again!) can be really cumbersome.
+
+The *implementation* of Redux, however, can be daunting, especially for beginners. Writing out all those actiontypes, actions, and reducers can get pretty boilerplat-y pretty fast. And if you're up for your second or third Redux app, writing all that stuff (again!) can be really cumbersome.
 
 Thats where RedX comes in. It allows you to create classes which contain functions that receive state and return new state.
 These classes (called Stores in RedX) and functions are transformed to reducers and actioncreators, so you don't have to worry about all the boilerplate, and can just focus on the functionality.
@@ -66,7 +67,7 @@ class CountStore {
 ```
 
 Voila, you just created two actiontypes, two actioncreators and two reducer functions.
-Note how an action is automatically provided with the current state of the reducer. An action returns new state in a shallow way, i.e. the rest of the state stays in tact. In other words: you only need to return the parts of the state that changes.
+Note how an action is automatically provided with the current state of the reducer. An action returns new state in a shallow way, i.e. the rest of the state stays in tact. In other words: you only need to return the parts of the state that changes, just like how `setState` works.
 
 # Connecting to React
 
@@ -96,7 +97,7 @@ export default observer(CountStore)(App);
 
 The `observer HOC` has the following signature: `observer(Store1, Store2, ...)(Component)`;
 The stores you supply will be made available as props on the component. Note that the name of the prop is in lowerCamelCase.
-the store supplied as a prop will contain all the pieces of state, plus all the methods you have defined as actions in your store class.
+The store supplied as a prop will contain all the pieces of state, plus all the methods you have defined as actions in your store class.
 
 # Async actions
 
