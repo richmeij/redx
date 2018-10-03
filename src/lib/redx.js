@@ -1,4 +1,4 @@
-import { isEmptyObject, findProperty, lowerCamelCase } from './util';
+import { isEmptyObject, lowerCamelCase } from './util';
 
 /**
  * Function accepts a class and returns a new class that you can use with RedX observer
@@ -23,7 +23,7 @@ export function store(Store) {
     const reducer = (state = initialState, action) => {
         const handler = handlers[action.type];
         if (handler !== undefined) {
-            let redXAsync = state.redXAsync;
+            let { redXAsync } = state;
             if (handler.__isRedXStartAction) {
                 redXAsync = '__STARTED__';
             }
@@ -36,10 +36,9 @@ export function store(Store) {
                 ...result,
                 redXAsync
             };
-        } else {
-            if(action.type.substr(0,8) !== '@@redux/') {
-                console.warn(`RedX: Handler for type [${action.type}] not found`);
-            }
+        }
+        if (action.type.substr(0, 8) !== '@@redux/') {
+            console.warn(`RedX: Handler for type [${action.type}] not found`);
         }
         return state;
     };
@@ -54,7 +53,7 @@ export function store(Store) {
                     const state = getState()[reducer.storeName];
                     const currentState = isEmptyObject(state) ? initialState : state;
                     const actions = Object.keys(reducer.__actionCreators).reduce((actions, key) => {
-                        actions[key] = () => { dispatch(reducer.__actionCreators[key]()); };
+                        actions[key] = () => { dispatch(reducer.__actionCreators[key]()); }; // eslint-disable-line no-param-reassign
                         return actions;
                     }, {});
                     return handler(...args)(dispatch, actions, currentState);
@@ -72,7 +71,7 @@ export function store(Store) {
     return () => {
         return reducer;
     };
-};
+}
 
 /**
  * Function accepts function to mark as being a RedX action

@@ -1,3 +1,4 @@
+/* eslint-disable import/prefer-default-export */
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -8,10 +9,12 @@ import { bindActionCreators } from 'redux';
  */
 export const observer = (...Stores) => {
     const stores = Stores.map(Store => new Store());
+
     const mapStateToProps = state => stores.reduce((acc, store) => {
         acc[store.storeName] = state[store.storeName];
         return acc;
     }, {});
+
     const mapDispatchToProps = dispatch => stores.reduce((acc, store) => {
         acc[store.storeName] = bindActionCreators(store.__actionCreators, dispatch);
         return acc;
@@ -27,7 +30,7 @@ export const observer = (...Stores) => {
         }, { ...ownProps });
 
         return result;
-    }
+    };
 
     return (Component) => {
         return connect(mapStateToProps, mapDispatchToProps, mergeProps)(Component);

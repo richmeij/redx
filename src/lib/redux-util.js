@@ -8,7 +8,7 @@ import * as Redux from 'redux';
 export const combineStores = (...stores) => {
     return stores.reduce((acc, Store) => {
         const store = new Store();
-        acc[store.storeName] = store
+        acc[store.storeName] = store;
         return acc;
     }, {});
 };
@@ -20,9 +20,9 @@ export const combineStores = (...stores) => {
  */
 export const createStore = (...Stores) => {
     return (...middleware) => Redux.createStore(
-        Redux.combineReducers({ 
+        Redux.combineReducers({
             ...combineStores(...Stores)
         }),
         Redux.applyMiddleware(...middleware)
     );
-}
+};

@@ -42,7 +42,8 @@ The storeName field is optional. If you do not supply a storeName, then the name
 
 # Adding actions
 
-To add functionality to the store, simply add methods to the class, and convert them into actions in the constructor:
+To add functionality to the store, simply create functions that are wrapped with `action(...)`, so RedX can recognize them as actions.
+Action functions receive the current state, and return new state in a shallow manner (i.e. just return the parts of state that need to be changed, just like `setState`);
 
 ```js
 import { action } from '@richmeij/redx';
@@ -52,26 +53,65 @@ class CountStore {
         this.initialState = {
             counter: 0
         }
-        this.increase = action(this.increase);
-        this.decrease = action(this.decrease);
-    }
-
-    increase(state) {
-        return { counter: state.counter + 1 };
-    }
-
-    decrease(state) {
-        return { counter: state.counter - 1 };
+        this.increase = action( (state) => { return { counter: state.counter + 1 }; } );
+        this.decrease = action( (state) => { return { counter: state.counter - 1 }; } );
     }
 }
+
+export default store(CountStore);
 ```
 
-Voila, you just created two actiontypes, two actioncreators and two reducer functions.
-Note how an action is automatically provided with the current state of the reducer. An action returns new state in a shallow way, i.e. the rest of the state stays in tact. In other words: you only need to return the parts of the state that changes, just like how `setState` works.
+Voila, you just created two actiontypes, two actioncreators and two reducer functions. RedX will see that this class has two actions, and creates the corresponding actiontypes and reducing functions that handle those actiontypes. 
+
+The format RedX uses for actionTypes is `[storeName].[actionName]`. So in the above example, two types will be created: `CountStore.increase` and `Countstore.decrease`.
+
+# Connecting to Redux
+
+So now that we have our store, we need to let Redux know about it. There's two ways to go about this.
+The place where we notify Redux about reducers is in the `createStore` function. Usually you would use something like `combineReducers` to add your reducers to the store, but since our stores aren't real reducers (yet), we can use a utillity function `combineStores` in combination with `combineReducers`.
+The signature for `combineStores` is: `combineStores(Store1, Store2, ..., StoreN)` and returns an object you can supply to `combineReducers`.
+
+```js
+import { createStore, combineReducers } from 'redux';
+import CountStore from './CountStore';
+
+const store = createStore(
+    combineReducers(
+        combineStores(CountStore)
+    )
+);
+```
+
+Or if you want to combine it with normal Redux reducers:
+
+```js
+import { createStore, combineReducers } from 'redux';
+import normalReducer1 from './normalReducer1';
+import normalReducer2 from './normalReducer2';
+import CountStore from './CountStore';
+
+const store = createStore(
+    combineReducers({
+        normalReducer1,
+        normalReducer2,
+        ...combineStores(CountStore)
+    )
+);
+```
+
+If you only use RedX stores, you can also use the RedX utillity function `createStore`, which accepts a list of RedX stores, and an optional list of Redux middleware: `createStore(Store1, ..., StoreN)(middleware1, ..., middlewareN)`
+
+```js
+import { createStore } from '@richmeij/redx/lib/redux-util';
+import thunk from 'redux-thunk';
+import CountStore from './CountStore';
+
+const store = createStore(CountStore)(thunk);
+```
 
 # Connecting to React
 
-To connect to a React component, import the store(s) you need, and connect them to your component using the `observer HOC` supplied by RedX:
+To connect to a React component, import the store(s) you need, and connect them to your component using the `observer` HOC supplied by RedX:
 
 ```js
 import React from 'react';
@@ -101,11 +141,49 @@ The store supplied as a prop will contain all the pieces of state, plus all the 
 
 # Async actions
 
-... todo ...
+Redux supports async actions (or async action creators) through middleware, and by default with [`Redux Thunk`](https://github.com/reduxjs/redux-thunk).
+The support for RedX is based on Redux Thunk's API and not tested with other async middleware.
 
-# Utility functions
+Creating an async action starts with wrapping a function with `asyncAction`. This function should return a new function that accepts three parameters:
+- dispatch: The Redux dispatch functions
+- actions: An object containing all the RedX actions from your RedX store. These actions are all wrapped in the dispatch function, so you can call them directly to trigger them.
+- state: The current state of the reducer
 
-... todo ...
+```js
+import { store, asyncAction } from '../lib/redx';
+
+class CountStore {
+    constructor() {
+
+        this.increaseAsyncStart = action(() => { 
+            return { delay: 5 }; 
+        });
+
+        this.countDown = action((state) => {
+            return { delay: state.delay - 1 };
+        });
+
+        this.increaseAsync = asyncAction(() => {
+            return (dispatch, actions) => {
+                actions.increaseAsyncStart();
+                const delayTimer = setInterval(
+                    () => {
+                        actions.countDown();
+                    },
+                    1000
+                );
+                setTimeout(
+                    () => {
+                        actions.increase();
+                        clearInterval(delayTimer);
+                    },
+                    5000
+                );
+            };
+        });
+    }
+}
+```
 
 # Demo app
 A demo app is included in the source, see [`src/app`](https://github.com/richmeij/redx/tree/master/src/app).
