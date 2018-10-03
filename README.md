@@ -150,7 +150,7 @@ Creating an async action starts with wrapping a function with `asyncAction`. Thi
 - state: The current state of the reducer
 
 ```js
-import { store, asyncAction } from '../lib/redx';
+import { store, asyncAction } from '@richmeij/redx';
 
 class CountStore {
     constructor() {
@@ -195,4 +195,3 @@ npm start
 ```
 
 The demo app will then be available on `http://localhost:1234` by default.
-

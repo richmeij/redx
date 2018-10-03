@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies, no-unused-vars, import/no-named-as-default, object-curly-newline */
 import React from 'react';
 import { observer } from '../lib/redx-react';
 import CountStore from './CountStore';

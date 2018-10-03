@@ -1,4 +1,3 @@
-
 /**
  * Count number of occurences for a property with a specific value in an object
  * @param {Object} source       Object to search
@@ -40,4 +39,3 @@ export function objectHasValues(sourceObject) {
         return hasValues || (sourceObject[key] !== undefined);
     }, false);
 }
-
