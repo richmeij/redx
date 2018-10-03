@@ -2,7 +2,8 @@
 RedX is a small library that eliminates the boilerplate that is common with writing Redux actioncreators and reducers.
 
 # Inspiration
-I have a lot of love for Redux. The principle is simple, and easy to reason about from a component perspective: Actions are fired and digested by reducers, state in reducers changes, and your connected components get new props. The *implementation* of Redux, however, can be daunting, especially for beginners. Writing out all those actiontypes, actions, and reducers can get pretty boilerplat-y pretty fast. And if your up for your second or third Redux app, writing all that stuff (again!) can be really cumbersome.
+I have a lot of love for Redux. The principle is simple, and easy to reason about from a component perspective: Actions are fired and digested by reducers, state in reducers changes, and your connected components get new props. 
+The *implementation* of Redux, however, can be daunting, especially for beginners. Writing out all those actiontypes, actions, and reducers can get pretty boilerplat-y pretty fast. And if your up for your second or third Redux app, writing all that stuff (again!) can be really cumbersome.
 
 Thats where RedX comes in. It allows you to create classes which contain functions that receive state and return new state.
 These classes (called Stores in RedX) and functions are transformed to reducers and actioncreators, so you don't have to worry about all the boilerplate, and can just focus on the functionality.
