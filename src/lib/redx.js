@@ -20,7 +20,7 @@ export function store(Store) {
         return handlers;
     }, {});
 
-    const reducer = (state = initialState, action) => {
+    let reducer = (state = initialState, action) => {
         const handler = handlers[action.type];
         if (handler !== undefined) {
             let { redXAsync } = state;

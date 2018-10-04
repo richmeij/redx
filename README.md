@@ -40,10 +40,22 @@ export default store(CountStore);
 You can supply a storeName field to give your store a name. This name will be used as the name of the prop that is supplied to the connected components.
 The storeName field is optional. If you do not supply a storeName, then the name of the class is used.
 
-# Adding actions
+Alternatively, you can use a decorator to indicate the class is a RedX store:
+```js
+import { store } from '@richmeij/redx';
 
-To add functionality to the store, simply create functions that are wrapped with `action(...)`, so RedX can recognize them as actions.
-Action functions receive the current state, and return new state in a shallow manner (i.e. just return the parts of state that need to be changed, just like `setState`);
+@store
+export default class CountStore {
+    constructor() {
+        this.storeName = 'CountStore'; // optional
+    }
+}
+```
+
+# Adding logic
+
+To add logic/functionality to the store, simply create functions that are wrapped with `action(...)`, so RedX can recognize them as actions.
+Actions receive the current state, and return new state in a shallow manner (i.e. just return the parts of state that need to be changed, just like `setState`);
 
 ```js
 import { action } from '@richmeij/redx';
@@ -61,9 +73,27 @@ class CountStore {
 export default store(CountStore);
 ```
 
-Voila, you just created two actiontypes, two actioncreators and two reducer functions. RedX will see that this class has two actions, and creates the corresponding actiontypes and reducing functions that handle those actiontypes. 
+Voila, underneath the hood you just created two actiontypes, two actioncreators and two reducer functions. RedX will see that this class has two actions, and creates the corresponding actiontypes and reducing functions that handle those actiontypes. 
 
 The format RedX uses for actionTypes is `[storeName].[actionName]`. So in the above example, two types will be created: `CountStore.increase` and `Countstore.decrease`.
+
+Alternatively, If your codebase supports class properties, your store might look like this:
+
+```js
+class CountStore {
+    initialState = {
+        counter: 0
+    }
+    
+    increase = action( 
+        (state) => { return { counter: state.counter + 1 }; } 
+    );
+    
+    decrease = action(
+        (state) => { return { counter: state.counter - 1 }; } 
+    );
+}
+```
 
 # Connecting to Redux
 
@@ -82,10 +112,11 @@ const store = createStore(
 );
 ```
 
-Or if you want to combine it with normal Redux reducers:
+Or, if you need to combine RedX stores with existing Redux reducers:
 
 ```js
 import { createStore, combineReducers } from 'redux';
+import { combineStores } from '@richmeij/redx/lib/redux-util';
 import normalReducer1 from './normalReducer1';
 import normalReducer2 from './normalReducer2';
 import CountStore from './CountStore';
@@ -95,7 +126,7 @@ const store = createStore(
         normalReducer1,
         normalReducer2,
         ...combineStores(CountStore)
-    )
+    })
 );
 ```
 
@@ -145,7 +176,7 @@ Redux supports async actions (or async action creators) through middleware, and 
 The support for RedX is based on Redux Thunk's API and not tested with other async middleware.
 
 Creating an async action starts with wrapping a function with `asyncAction`. This function should return a new function that accepts three parameters:
-- dispatch: The Redux dispatch functions
+- dispatch: The Redux dispatch function
 - actions: An object containing all the RedX actions from your RedX store. These actions are all wrapped in the dispatch function, so you can call them directly to trigger them.
 - state: The current state of the reducer
 
