@@ -9,9 +9,9 @@ The *implementation* of Redux, however, can be daunting, especially for beginner
 Thats where RedX comes in. It allows you to create classes which contain functions that receive state and return new state.
 These classes (called Stores in RedX) and functions are transformed to normal Redux reducers and actioncreators underneath the hood, so you don't have to worry about all the boilerplate, and can just focus on the functionality.
 
-Currently, RedX also comes with React bindings only (building on react-redux). These bindings are contained within the main package, but might become a separate package in the future.
+Currently, RedX comes with React bindings only (building on [react-redux](https://github.com/reduxjs/react-redux)). These bindings are contained within the main package, but might become a separate package in the future.
 
-RedX is inspired by MobX (:heart:) in terms of terminology and abstraction, but it's still just good ol' Redux.
+RedX is inspired by [MobX](https://github.com/mobxjs/mobx) (:heart:) in terms of terminology and abstraction, but it's still just good ol' Redux.
 
 # Installation
 Just install with npm.
@@ -19,6 +19,11 @@ Just install with npm.
 ```
 npm install @richmeij/redx
 ```
+
+# Peer dependencies
+[Redux](https://github.com/reduxjs/redux) is obviously a peer dependency.
+If you use RedX with React, you're going to need [react-redux](https://github.com/reduxjs/react-redux).
+If you're going to use async functions you'll need [redux-thunk](https://github.com/reduxjs/redux-thunk).
 
 # Creating a Store
 
@@ -172,7 +177,7 @@ The store supplied as a prop will contain all the pieces of state, plus all the 
 
 # Async actions
 
-Redux supports async actions (or async action creators) through middleware, and by default with [`Redux Thunk`](https://github.com/reduxjs/redux-thunk).
+Redux supports async actions (or async action creators) through middleware, and by default with [redux-thunk](https://github.com/reduxjs/redux-thunk).
 The support for RedX is based on Redux Thunk's API and not tested with other async middleware.
 
 Creating an async action starts with wrapping a function with `asyncAction`. This function should return a new function that accepts three parameters:
