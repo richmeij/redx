@@ -7,7 +7,7 @@ I have a lot of love for Redux. The principle is simple, and easy to reason abou
 The *implementation* of Redux, however, can be daunting, especially for beginners. Writing out all those actiontypes, actions, and reducers can get pretty boilerplat-y pretty fast. And if you're up for your second or third Redux app, writing all that stuff (again!) can be really cumbersome.
 
 Thats where RedX comes in. It allows you to create classes which contain functions that receive state and return new state.
-These classes (called Stores in RedX) and functions are transformed to normal Redux reducers and actioncreators underneed the hood, so you don't have to worry about all the boilerplate, and can just focus on the functionality.
+These classes (called Stores in RedX) and functions are transformed to normal Redux reducers and actioncreators underneath the hood, so you don't have to worry about all the boilerplate, and can just focus on the functionality.
 
 Currently, RedX also comes with React bindings only (building on react-redux). These bindings are contained within the main package, but might become a separate package in the future.
 
