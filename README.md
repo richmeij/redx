@@ -80,7 +80,7 @@ class CountStore {
 export default store(CountStore);
 ```
 
-Voila, underneath the hood you just created two actiontypes, two actioncreators and two reducer functions. RedX will see that this class has two actions, and creates the corresponding actiontypes and reducing functions that handle those actiontypes. 
+Voila, under the hood you just created two actiontypes, two actioncreators and two reducer functions. RedX will see that this class has two actions, and creates the corresponding actiontypes and reducing functions that handle those actiontypes. 
 
 The format RedX uses for actionTypes is `[storeName].[actionName]`. So in the above example, two types will be created: `CountStore.increase` and `Countstore.decrease`.
 
