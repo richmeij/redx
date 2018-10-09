@@ -1,6 +1,7 @@
 # Introduction 
-RedX is a small library that eliminates the boilerplate that is common with writing Redux actioncreators and reducers.
-This library (and this readme) assume working knowledge of Redux and React.
+RedX is a small library that eliminates the 'boilerplate' that is common with writing Redux actiontypes, actioncreators and reducers. 
+
+Disclaimer: If you're strarting out with Redux, I think it's a good idea to work with the basics first, to get an idea of what this libray tries to solve for you. This library (and this readme) assume working knowledge of Redux and React.
 
 # Inspiration
 I have a lot of love for Redux. The principle is simple, and easy to reason about from a component perspective: Actions are fired and digested by reducers, state in the store changes, and your connected components get new props. 
