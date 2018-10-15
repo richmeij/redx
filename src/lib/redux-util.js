@@ -23,6 +23,6 @@ export const createStore = (...Stores) => {
         Redux.combineReducers({
             ...combineStores(...Stores)
         }),
-        Redux.applyMiddleware(...middleware)
+        middleware ? Redux.applyMiddleware(...middleware) : undefined
     );
 };

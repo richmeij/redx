@@ -39,3 +39,9 @@ export function objectHasValues(sourceObject) {
         return hasValues || (sourceObject[key] !== undefined);
     }, false);
 }
+
+const funcNameRegex = /function\s([^(]{1,})\(/;
+export function getFunctionName(func) {
+    const results = (funcNameRegex).exec((func).toString());
+    return (results && results.length > 1) ? results[1].trim() : "";
+}

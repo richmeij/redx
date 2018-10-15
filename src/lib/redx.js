@@ -1,4 +1,4 @@
-import { isEmptyObject, lowerCamelCase } from './util';
+import { isEmptyObject, lowerCamelCase, getFunctionName } from './util';
 
 /**
  * Function accepts a class and returns a new class that you can use with RedX observer
@@ -7,7 +7,8 @@ import { isEmptyObject, lowerCamelCase } from './util';
  */
 export function store(Store) {
     const target = new Store();
-    const storeName = target.storeName || target.constructor.name;
+    console.log(target);
+    const storeName = target.storeName || target.constructor.name || getFunctionName(target);
     const initialState = target.initialState || {};
     const actions = Object.getOwnPropertyNames(target).filter(propName => target[propName].__isRedXAction);
 
