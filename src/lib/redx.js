@@ -20,7 +20,7 @@ export function store(Store) {
         return handlers;
     }, {});
 
-    let reducer = (state = initialState, action) => {
+    const reducer = (state = initialState, action) => {
         const handler = handlers[action.type];
         if (handler !== undefined) {
             let { redXAsync } = state;
@@ -53,7 +53,7 @@ export function store(Store) {
                     const state = getState()[reducer.storeName];
                     const currentState = isEmptyObject(state) ? initialState : state;
                     const actions = Object.keys(reducer.__actionCreators).reduce((actions, key) => {
-                        actions[key] = () => { dispatch(reducer.__actionCreators[key]()); }; // eslint-disable-line no-param-reassign
+                        actions[key] = (...args) => { dispatch(reducer.__actionCreators[key](...args, state)); }; // eslint-disable-line no-param-reassign
                         return actions;
                     }, {});
                     return handler(...args)(dispatch, actions, currentState);
