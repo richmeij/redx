@@ -2,8 +2,6 @@ import { store, action, asyncAction } from '../lib/redx';
 
 class CountStore {
     constructor() {
-        this.storeName = 'CountStore'; // optional
-
         this.initialState = {
             counter: 10,
             delay: 0
@@ -18,6 +16,10 @@ class CountStore {
         });
 
         this.increaseAsyncStart = action(() => { return { delay: 5 }; });
+
+        this.reset = action(() => {
+            return { delay: 0 };
+        });
 
         this.countDown = action((state) => {
             return { delay: state.delay - 1 };
@@ -34,6 +36,7 @@ class CountStore {
                 );
                 setTimeout(
                     () => {
+                        actions.reset();
                         actions.increase();
                         clearInterval(delayTimer);
                     },

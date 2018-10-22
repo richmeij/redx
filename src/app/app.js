@@ -7,6 +7,7 @@ import CountStore from './CountStore';
 export const App = ({ countStore, title }) => {
     const { counter, delay, increase, decrease, increaseAsync } = countStore;
     const disabled = delay > 0;
+
     return (
         <React.Fragment>
             <h1>{ title }</h1>

@@ -39,3 +39,7 @@ export function objectHasValues(sourceObject) {
         return hasValues || (sourceObject[key] !== undefined);
     }, false);
 }
+
+export function getFuncName(func) {
+    return (func.toString().match(/^function\s*([^\s(]+)/) || [])[1];
+}

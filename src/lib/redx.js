@@ -1,4 +1,4 @@
-import { isEmptyObject, lowerCamelCase } from './util';
+import { isEmptyObject, lowerCamelCase, getFuncName } from './util';
 
 /**
  * Function accepts a class and returns a new class that you can use with RedX observer
@@ -7,7 +7,7 @@ import { isEmptyObject, lowerCamelCase } from './util';
  */
 export function store(Store) {
     const target = new Store();
-    const storeName = target.storeName || target.constructor.name;
+    const storeName = target.storeName || target.constructor.name || getFuncName(target.constructor);
     const initialState = target.initialState || {};
     const actions = Object.getOwnPropertyNames(target).filter(propName => target[propName].__isRedXAction);
 
@@ -53,7 +53,7 @@ export function store(Store) {
                     const state = getState()[reducer.storeName];
                     const currentState = isEmptyObject(state) ? initialState : state;
                     const actions = Object.keys(reducer.__actionCreators).reduce((actions, key) => {
-                        actions[key] = (...args) => { dispatch(reducer.__actionCreators[key](...args, state)); }; // eslint-disable-line no-param-reassign
+                        actions[key] = (...args) => { dispatch(reducer.__actionCreators[key](...args, getState()[reducer.storeName])); }; // eslint-disable-line no-param-reassign
                         return actions;
                     }, {});
                     return handler(...args)(dispatch, actions, currentState);
