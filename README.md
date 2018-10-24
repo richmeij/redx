@@ -1,3 +1,5 @@
+<a href="https://snyk.io/test/github/richmeij/redx"><img src="https://snyk.io/test/github/richmeij/redx/badge.svg" alt="Known Vulnerabilities" data-canonical-src="https://snyk.io/test/github/richmeij/redx" style="max-width:100%;"/></a>
+
 # Introduction 
 RedX is a small library that eliminates the 'boilerplate' that is common with writing Redux actiontypes, actioncreators and reducers. 
 
