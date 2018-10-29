@@ -1,10 +1,12 @@
+<a href="https://snyk.io/test/github/richmeij/redx"><img src="https://snyk.io/test/github/richmeij/redx/badge.svg" alt="Known Vulnerabilities" data-canonical-src="https://snyk.io/test/github/richmeij/redx" style="max-width:100%;"/></a>
+
 # Introduction 
-RedX is a small library that eliminates the 'boilerplate' that is common with writing Redux actiontypes, actioncreators and reducers. 
+RedX is a small, dependency free library that eliminates the 'boilerplate' that is common with writing Redux actiontypes, actioncreators and reducers. 
 
 Disclaimer: If you're strarting out with Redux, I think it's a good idea to work with the basics first, to get an idea of what this libray tries to solve for you. This library (and this readme) assume working knowledge of Redux and React.
 
 # Inspiration
-I have a lot of love for Redux. The principle is simple, and easy to reason about from a component perspective: Actions are fired and digested by reducers, state in the store changes, and your connected components get new props. 
+I have a lot of love for Redux. The principle is simple, and easy to reason about from a component perspective: Actions are triggered and digested by reducers, state in the store changes, and your connected components get new props. 
 
 The *implementation* of Redux, however, can be daunting, especially for beginners. Writing out all those actiontypes, actions, and reducers can get pretty boilerplat-y pretty fast. And if you're up for your second or third Redux app, writing all that stuff (again!) can be really cumbersome.
 
@@ -46,6 +48,8 @@ export default store(CountStore);
 
 You can supply a storeName field to give your store a name. This name will be used as the name of the prop that is supplied to the connected components.
 The storeName field is optional. If you do not supply a storeName, then the name of the class is used.
+
+NOTE: Ommission of the storeName can cause issues when you use a buildprocess that mangles variablenames.
 
 Alternatively, you can use a decorator to indicate the class is a RedX store:
 ```js
