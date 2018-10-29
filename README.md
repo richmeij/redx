@@ -49,6 +49,8 @@ export default store(CountStore);
 You can supply a storeName field to give your store a name. This name will be used as the name of the prop that is supplied to the connected components.
 The storeName field is optional. If you do not supply a storeName, then the name of the class is used.
 
+NOTE: Ommission of the storeName can cause issues when you use a buildprocess that mangles variablenames.
+
 Alternatively, you can use a decorator to indicate the class is a RedX store:
 ```js
 import { store } from '@richmeij/redx';
