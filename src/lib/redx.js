@@ -39,7 +39,7 @@ export function store(Store) {
         }
         if (action.type.substr(0, 8) !== '@@redux/') {
             if (action.type.split('_')[0] === storeName) {
-                console.warn(`RedX: Handler for type [${action.type}] not found`);
+                console.warn(`RedX: Handler for type [${action.type}] not found`); // eslint-disable-line no-console
             }
         }
         return state;
